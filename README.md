@@ -14,7 +14,7 @@ $ npm install @geut/hypercore-promise
 
 ## <a name="usage"></a> Usage
 
-```
+```javascript
 const hypercore = require('@geut/hypercore-promise')
 
 ;(async () => {
