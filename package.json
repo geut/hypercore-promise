@@ -40,9 +40,9 @@
     "url": "git+https://github.com/geut/hypercore-promise.git"
   },
   "keywords": [
-    "create",
+    "hypercore",
     "geut",
-    "module"
+    "promises"
   ],
   "author": {
     "name": "GEUT",
