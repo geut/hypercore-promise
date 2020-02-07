@@ -6,7 +6,8 @@
   "files": [
     "lib",
     "bin",
-    "index.js"
+    "index.js",
+    "callback-methods.js"
   ],
   "scripts": {
     "start": "node index.js",
