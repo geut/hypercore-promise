@@ -59,4 +59,4 @@ const tests = [
 ]
 
 // We convert the promise style into callbacks (again) to test against the original hypercore test code, if the promises are ok, the callbacks should work fine.
-tests.map(test => proxyquire(`hypercore/test/${test}`, { './helpers/create': create }))
+tests.forEach(test => proxyquire(`hypercore/test/${test}`, { './helpers/create': create }))

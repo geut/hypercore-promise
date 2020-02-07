@@ -40,8 +40,10 @@
     "url": "git+https://github.com/geut/hypercore-promise.git"
   },
   "keywords": [
+    "dat",
     "hypercore",
-    "geut",
+    "p2p",
+    "async-await",
     "promises"
   ],
   "author": {
