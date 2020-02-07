@@ -51,5 +51,8 @@
   "bugs": {
     "url": "https://github.com/geut/hypercore-promise/issues"
   },
-  "homepage": "https://github.com/geut/hypercore-promise#readme"
+  "homepage": "https://github.com/geut/hypercore-promise#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
