@@ -37,7 +37,7 @@ test('set an external hypercore instance', async function (t) {
   t.equal(_feed._storage, feed._storage)
 })
 
-test.only('cache methods', async function (t) {
+test('cache methods', async function (t) {
   t.plan(1)
 
   const feed = hypercorePromise(ram)
