@@ -22,17 +22,17 @@ class HypercorePromise {
     if (propKey === kHypercore) return target
 
     const value = Reflect.get(target, propKey)
-    if (typeof value === 'function') return this._callFunction(target, propKey, value)
+    if (typeof value === 'function') return this._getMethod(target, propKey, value)
     return value
   }
 
-  _callFunction (target, propKey, func) {
-    let handler = this._cache[propKey]
+  _getMethod (target, propKey, func) {
+    let method = this._cache[propKey]
 
-    if (handler) return handler
+    if (method) return method
 
     if (callbackMethods.includes(propKey)) {
-      handler = (...args) => {
+      method = (...args) => {
         // We keep suporting the callback style if we get a callback.
         if (typeof args[args.length - 1] === 'function') {
           return Reflect.apply(func, target, args)
@@ -52,12 +52,12 @@ class HypercorePromise {
         })
       }
     } else {
-      handler = (...args) => Reflect.apply(func, target, args)
+      method = (...args) => Reflect.apply(func, target, args)
     }
 
-    this._cache[propKey] = handler
+    this._cache[propKey] = method
 
-    return handler
+    return method
   }
 }
 
