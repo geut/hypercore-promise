@@ -13,6 +13,8 @@ class HypercorePromise {
       feed = hypercore(...args)
     }
 
+    this._cache = {}
+
     return new Proxy(feed, this)
   }
 
@@ -20,33 +22,45 @@ class HypercorePromise {
     if (propKey === kHypercore) return target
 
     const value = Reflect.get(target, propKey)
-    if (callbackMethods.includes(propKey)) return this._buildCallbackPromise(target, value)
-    if (typeof value === 'function') return (...args) => Reflect.apply(value, target, args)
+    if (typeof value === 'function') return this._callFunction(target, propKey, value)
     return value
   }
 
-  _buildCallbackPromise (target, func) {
-    return (...args) => {
-      // We keep suporting the callback style if we get a callback.
-      if (typeof args[args.length - 1] === 'function') {
-        return Reflect.apply(func, target, args)
-      }
+  _callFunction (target, propKey, func) {
+    let handler = this._cache[propKey]
 
-      return new Promise((resolve, reject) => {
-        args.push((err, ...result) => {
-          if (err) return reject(err)
-          if (result.length > 1) {
-            resolve(result)
-          } else {
-            resolve(result[0])
-          }
+    if (handler) return handler
+
+    if (callbackMethods.includes(propKey)) {
+      handler = (...args) => {
+        // We keep suporting the callback style if we get a callback.
+        if (typeof args[args.length - 1] === 'function') {
+          return Reflect.apply(func, target, args)
+        }
+
+        return new Promise((resolve, reject) => {
+          args.push((err, ...result) => {
+            if (err) return reject(err)
+            if (result.length > 1) {
+              resolve(result)
+            } else {
+              resolve(result[0])
+            }
+          })
+
+          Reflect.apply(func, target, args)
         })
-
-        Reflect.apply(func, target, args)
-      })
+      }
+    } else {
+      handler = (...args) => Reflect.apply(func, target, args)
     }
+
+    this._cache[propKey] = handler
+
+    return handler
   }
 }
 
 module.exports = (...args) => new HypercorePromise(...args)
+module.exports.HypercorePromise = HypercorePromise
 module.exports.getHypercore = hypercorePromise => hypercorePromise[kHypercore]
