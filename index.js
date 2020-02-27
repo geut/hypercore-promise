@@ -1,5 +1,3 @@
-const hypercore = require('hypercore')
-
 const callbackMethods = require('./callback-methods')
 
 const kHypercore = Symbol('kHypercore')
@@ -10,7 +8,7 @@ class HypercorePromise {
     if (args.length === 1 && args[0].get && args[0].append) {
       feed = args[0]
     } else {
-      feed = hypercore(...args)
+      feed = require('hypercore')(...args)
     }
 
     this._cache = {}
