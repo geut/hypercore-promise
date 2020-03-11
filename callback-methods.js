@@ -16,5 +16,6 @@ module.exports = [
   'finalize',
   'append',
   'flush',
-  'audit'
+  'audit',
+  'destroy'
 ]
