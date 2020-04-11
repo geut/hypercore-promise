@@ -17,5 +17,6 @@ module.exports = [
   'append',
   'flush',
   'audit',
-  'destroy'
+  'destroy',
+  'destroyData'
 ]
