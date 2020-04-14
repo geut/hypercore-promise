@@ -1,4 +1,4 @@
-const proxyquire = require('proxyquire')
+const proxyquire = require('proxyquire').noCallThru()
 const ram = require('random-access-memory')
 
 const hypercorePromise = require('..')
