@@ -18,5 +18,5 @@ module.exports = [
   'flush',
   'audit',
   'destroy',
-  'destroyData'
+  'destroyStorage'
 ]
