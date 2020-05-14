@@ -2,3 +2,9 @@ language: node_js
 node_js:
   - "node"
   - "12"
+os:
+  - windows
+  - osx
+  - linux
+cache:
+  npm: false
