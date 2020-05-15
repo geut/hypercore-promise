@@ -4,7 +4,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-> An async/await based wrapper for [hypercore](https://github.com/mafintosh/hypercore) (v8+)
+> An async/await based wrapper for [hypercore](https://github.com/hypercore-protocol/hypercore) (v9+)
 
 ## <a name="install"></a> Install
 
