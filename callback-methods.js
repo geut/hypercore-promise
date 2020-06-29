@@ -6,6 +6,7 @@ module.exports = [
   'proof',
   'put',
   'clear',
+  'close',
   'signature',
   'verify',
   'rootHashes',
