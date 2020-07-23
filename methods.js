@@ -18,7 +18,8 @@ module.exports = {
     'append',
     'flush',
     'audit',
-    'destroyStorage'
+    'destroyStorage',
+    'close'
   ],
   cancelableMethods: [
     'cancel',
