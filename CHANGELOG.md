@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 2.1.0 - 2020-07-23 [YANKED]
+
 ## [2.0.0] - 2020-05-15
 ### Changed
 - Update to hypercore 9
@@ -21,5 +23,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.1 - 2020-02-07 [YANKED]
 
 ## 1.0.0 - 2020-02-07 [YANKED]
-[Unreleased]: https://github.com/geut/hypercore-promise/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/geut/hypercore-promise/compare/v2.1.0...HEAD
 [2.0.0]: https://github.com/geut/hypercore-promise/compare/v1.2.1...v2.0.0
