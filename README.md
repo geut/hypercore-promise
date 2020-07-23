@@ -28,6 +28,36 @@ const hypercore = require('@geut/hypercore-promise')
 })
 ```
 
+### Differences with Hypercore
+
+Some methods like `get` and `download` not only use callbacks but also returns a value directly.
+
+```javascript
+const id = feed.get(0, (err, data) => {
+  console.log(data)
+})
+```
+
+Since our methods return promises what you need to do to get the internal value is to use our function helper `getValue`.
+
+```javascript
+const { getValue } = require('hypercore-promise')
+
+const promise = feed.get(0)
+const id = getValue(promise)
+promise.then(data => console.log(data))
+```
+
+`hypercore-promise` already detects the internal value so you don't need to use `getValue` in that case.
+
+```javascript
+const promise = feed.get(0)
+feed.cancel(promise)
+promise.catch(err => {
+  console.log('was canceled')
+})
+```
+
 ## <a name="issues"></a> Issues
 
 :bug: If you found an issue we encourage you to report it on [github](https://github.com/geut/hypercore-promise/issues). Please specify your OS and the actions to reproduce it.
