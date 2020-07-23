@@ -3,7 +3,7 @@ const proxyquire = require('proxyquire').noCallThru()
 const ram = require('random-access-memory')
 
 const hypercorePromise = require('..')
-const callbackMethods = require('../callback-methods')
+const { callbackMethods } = require('../methods')
 
 function create (key, opts) {
   return toCallback(hypercorePromise(ram, key, opts))
@@ -24,13 +24,16 @@ function toCallback (feed) {
   return new Proxy(feed, {
     get (target, propKey) {
       const value = Reflect.get(target, propKey)
+
       if (callbackMethods.includes(propKey)) {
         callbackTested[propKey] = true
 
         return (...args) => {
           if (typeof args[args.length - 1] === 'function') {
             const cb = args.pop()
-            return value(...args).then(result => {
+            const p = value(...args)
+
+            p.then(result => {
               // This functions returns multiple arguments
               if (['seek', 'rootHashes'].includes(propKey)) {
                 return cb(null, ...result)
@@ -39,6 +42,8 @@ function toCallback (feed) {
             }).catch(err => {
               cb(err)
             })
+
+            return hypercorePromise.getValue(p)
           }
           return value(...args)
         }

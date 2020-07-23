@@ -1,6 +1,9 @@
-const callbackMethods = require('./callback-methods')
+const { callbackMethods, cancelableMethods } = require('./methods')
 
-const kHypercore = Symbol('kHypercore')
+const kHypercore = Symbol('hypercore')
+const kValue = Symbol('value')
+
+const getValue = value => value && typeof value === 'object' ? value[kValue] : null
 
 class HypercorePromise {
   constructor (...args) {
@@ -36,7 +39,8 @@ class HypercorePromise {
           return Reflect.apply(func, target, args)
         }
 
-        return new Promise((resolve, reject) => {
+        let id
+        const p = new Promise((resolve, reject) => {
           args.push((err, ...result) => {
             if (err) return reject(err)
             if (result.length > 1) {
@@ -45,9 +49,23 @@ class HypercorePromise {
               resolve(result[0])
             }
           })
-
-          Reflect.apply(func, target, args)
+          id = Reflect.apply(func, target, args)
         })
+        if (id) {
+          p[kValue] = id
+        }
+        return p
+      }
+    } else if (cancelableMethods.includes(propKey)) {
+      method = (start, end) => {
+        if (end !== undefined) {
+          return Reflect.apply(func, target, [start, end])
+        }
+
+        let id = getValue(start)
+        if (!id) id = start
+
+        return Reflect.apply(func, target, [id])
       }
     } else {
       method = (...args) => Reflect.apply(func, target, args)
@@ -62,3 +80,4 @@ class HypercorePromise {
 module.exports = (...args) => new HypercorePromise(...args)
 module.exports.HypercorePromise = HypercorePromise
 module.exports.getHypercore = hypercorePromise => hypercorePromise[kHypercore]
+module.exports.getValue = getValue
