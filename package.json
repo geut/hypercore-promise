@@ -1,6 +1,6 @@
 {
   "name": "@geut/hypercore-promise",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "An async/await based wrapper for hypercore (v8+)",
   "main": "index.js",
   "files": [
